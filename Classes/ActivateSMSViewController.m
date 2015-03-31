@@ -115,30 +115,58 @@ static UICompositeViewDescription *compositeProcessSMSDescription = nil;
     NSLog(@"User Password is:%@",str_usrPassword);
     
 //    NSString *urlForHttpGet = [NSString stringWithFormat:@"http://india.msg91.com/sendhttp.php?user=khannaankit&password=nanana&mobiles=+%@&message=Your verification code is '%@'.&sender=GOBZAR",str_mblNumber,randomChar];
-    
+//    
     NSString *urlForHttpGet = [NSString stringWithFormat:@"https://onecallcaspian.co.uk/mobile/sms?phone_number=%@&password=%@&from=onecall&text=Your verification code is <%@>.&receiver=%@",str_mblNumber,str_usrPassword,randomChar,str_mblNumber];
     
     NSString* urlTextEscaped = [urlForHttpGet stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     // Send a synchronous request
    NSURLRequest * urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:urlTextEscaped]];
-    NSURLResponse * response = nil;
-    NSError * error = nil;
-    NSData * data = [NSURLConnection sendSynchronousRequest:urlRequest
-                                          returningResponse:&response
-                                                      error:&error];
-    if(data)
-    {
-        NSString *str_Data = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"Response is : %@", str_Data);
-    }  //Added by ankit khanna to remove warnings on 7 March 2015
+//    NSURLResponse * response = nil;
+//    NSError * error = nil;
     
+    [NSURLConnection
+     sendAsynchronousRequest:urlRequest
+     queue:[[NSOperationQueue alloc] init]
+     completionHandler:^(NSURLResponse *response,
+                         NSData *data,
+                         NSError *error)
+     {
+         
+         if ([data length] >0 && error == nil)
+         {
+             
+             // DO YOUR WORK HERE
+                     NSString *str_Data = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                     NSLog(@"Response is : %@", str_Data);
+                    NSLog(@"Web API ran successfully.");
+             
+         }
+         else if ([data length] == 0 && error == nil)
+         {
+             NSLog(@"Nothing happened.");
+         }
+         else if (error != nil){
+             NSLog(@"Error = %@", error);
+         }
+         
+     }];
     
-    if (error == nil)
-    {
-        // Parse data here
-        NSLog(@"Web API ran successfully.");
-    }
+//    NSData * data = [NSURLConnection sendSynchronousRequest:urlRequest
+//                                          returningResponse:&response
+//                                                      error:&error];
+//    if(data)
+//    {
+//        NSString *str_Data = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//        NSLog(@"Response is : %@", str_Data);
+//    }  //Added by ankit khanna to remove warnings on 7 March 2015
+//    
+//    
+//    if (error == nil)
+//    {
+//        // Parse data here
+//        NSLog(@"Web API ran successfully.");
+//    }
     
     // End of Web API code
 

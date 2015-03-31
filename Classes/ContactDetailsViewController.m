@@ -312,18 +312,7 @@ static UICompositeViewDescription *compositeDescription = nil;
 }
 
 - (IBAction)onEditClick:(id)event {
-    // SMS
-    
-//    int buttonTagConstant = 200;
-//    for (UIView* subV in self.view.subviews)
-//    {
-//        if (subV.tag >= buttonTagConstant)
-//        {
-//            [subV removeFromSuperview];
-//        }
-//    }
 
-    //End
     [[NSNotificationCenter defaultCenter]postNotificationName:@"Remove_Buttons" object:nil];
     if([tableController isEditing]) {
         if([tableController isValid]) {

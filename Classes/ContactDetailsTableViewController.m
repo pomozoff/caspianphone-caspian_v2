@@ -782,6 +782,15 @@ static const ContactSections_e contactSections[ContactSections_MAX] = {ContactSe
     }
     return cell;
 }
+- (void)alertErrorMessage:(NSString *)message withTitle:(NSString *)title {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                    message:message
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+    [alert release];
+}
 -(void)showAbout:(id)sender {
     UIButton *clicked = (UIButton *) sender;
     NSString *str_sender = [NSString stringWithFormat:@"%d",clicked.tag];
@@ -874,10 +883,23 @@ else if (str_sender1==204)  {
             NSLog(@"Sync successful");
         }
     }
+    NSString *str_SMS_Active_State = [[NSUserDefaults standardUserDefaults] objectForKey:@"SMS_Active_State"];
+    int initialValue = 1;
+    NSString *initState = [NSString stringWithFormat: @"%d", initialValue];
+    if ([str_SMS_Active_State isEqualToString:initState]) {
         smsCaspianConversationVC *controller = DYNAMIC_CAST([[PhoneMainView instance] changeCurrentView:[smsCaspianConversationVC compositeViewDescription]
                                                                                                    push:TRUE], smsCaspianConversationVC);
         if (controller) {   NSLog(@"Moving to SMS Conversation");    }
- 
+    }   else {
+        [self alertErrorMessage:NSLocalizedString(@"Please activate SMS functionality first.", nil)
+                               withTitle:NSLocalizedString(@"SMS Activation Required", nil)];
+        
+        ChatViewController *controller = DYNAMIC_CAST([[PhoneMainView instance] changeCurrentView:[ChatViewController compositeSMSViewDescription]
+                                                                                             push:TRUE], ChatViewController);
+        if (controller) {
+            NSLog(@"Moving to SMS activation screen");
+        }
+    }
     
 }
 -(void)showAbout10:(id)sender {
@@ -1103,22 +1125,23 @@ else if (str_sender1==204)  {
             CFRelease(lMap);
         }
         if(dest != nil) {
-       //     NSString *displayName = [FastAddressBook getContactDisplayName:contact];
+            NSString *displayName = [FastAddressBook getContactDisplayName:contact];
+           
             if([ContactSelection getSelectionMode] != ContactSelectionModeMessage) {
                 // Pop up selection view
-                UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"Please select:" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
-                                        @"Call",
-                                        @"SMS",
-                                        @"Chat",
-                                        nil];
-                popup.tag = 1;
-                [popup showInView:[UIApplication sharedApplication].keyWindow];
+//                UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"Please select:" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
+//                                        @"Call",
+//                                        @"SMS",
+//                                        @"Chat",
+//                                        nil];
+//                popup.tag = 1;
+//                [popup showInView:[UIApplication sharedApplication].keyWindow];
                 //End
                 // Go to dialer view
-//                DialerViewController *controller = DYNAMIC_CAST([[PhoneMainView instance] changeCurrentView:[DialerViewController compositeViewDescription]], DialerViewController);
-//                if(controller != nil) {
-//                    [controller call:dest displayName:displayName];
-//                }
+                DialerViewController *controller = DYNAMIC_CAST([[PhoneMainView instance] changeCurrentView:[DialerViewController compositeViewDescription]], DialerViewController);
+                if(controller != nil) {
+                    [controller call:dest displayName:displayName];
+                }
             } else {
                 // Go to Chat room view
                 [[PhoneMainView instance] popToView:[ChatViewController compositeViewDescription]]; // Got to Chat and push ChatRoom

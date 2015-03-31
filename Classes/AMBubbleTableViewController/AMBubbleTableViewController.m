@@ -544,30 +544,63 @@
     NSLog(@"User Mobile Number is:%@",str_mblNumber);
     NSLog(@"Text field says:%@",str_messageViewField);
     NSLog(@"Phone Number says:%@",str_finalPhoneNumber);
-   // NSString *urlForHttpGet = [NSString stringWithFormat:@"http://india.msg91.com/sendhttp.php?user=khannaankit&password=253912&mobiles=+%@&message=%@&sender=GOBZAR",str_finalPhoneNumber,str_messageViewField];
+  //  NSString *urlForHttpGet = [NSString stringWithFormat:@"http://india.msg91.com/sendhttp.php?user=khannaankit&password=253912&mobiles=+%@&message=%@&sender=GOBZAR",str_finalPhoneNumber,str_messageViewField];
     NSString *urlForHttpGet = [NSString stringWithFormat:@"https://onecallcaspian.co.uk/mobile/sms?phone_number=%@&password=%@&from=onecall&text=%@&receiver=%@",str_mblNumber,str_usrPassword,str_messageViewField,str_finalPhoneNumber];
-      //  NSString *urlForHttpGet = [NSString stringWithFormat:@"http://google.com"];
+
+   //     NSString *urlForHttpGet = [NSString stringWithFormat:@"http://google.com"];
     NSString* urlTextEscaped = [urlForHttpGet stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     // Send a synchronous request
     NSURLRequest * urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:urlTextEscaped]];
-    NSURLResponse * response = nil;
-    NSError * error = nil;
-    NSData * data = [NSURLConnection sendSynchronousRequest:urlRequest
-                                          returningResponse:&response
-                                                      timeoutInterval:5.0];
-    if(data)
-    {
-        NSString *str_Data = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"Response is : %@", str_Data);
-    }  //Added by ankit khanna to remove warnings on 7 March 2015
-    
-    
-    if (error == nil)
-    {
-        // Parse data here
-        NSLog(@"Web API ran successfully.");
-    }
+ 
+//    NSURLResponse * response = nil;
+//    NSError * error = nil;
+//    NSData * data = [NSURLConnection sendSynchronousRequest:urlRequest
+//                                          returningResponse:&response
+//                                                      error:&error];
+    [NSURLConnection
+     sendAsynchronousRequest:urlRequest
+     queue:[[NSOperationQueue alloc] init]
+     completionHandler:^(NSURLResponse *response,
+                         NSData *data,
+                         NSError *error)
+     {
+         
+         if ([data length] >0 && error == nil)
+         {
+             
+             // DO YOUR WORK HERE
+             if(data)
+             {
+                 NSString *str_Data = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                 NSLog(@"Response is : %@", str_Data);
+                 NSLog(@"Web API ran successfully.");
+             }  //Added by ankit khanna to remove warnings on 7 March 2015
+             
+             
+         }
+         else if ([data length] == 0 && error == nil)
+         {
+              NSLog(@"Empty data string.");
+         }
+         else if (error != nil){
+             NSLog(@"Error = %@", error);
+         }
+         
+     }];
+
+//    if(data)
+//    {
+//        NSString *str_Data = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//        NSLog(@"Response is : %@", str_Data);
+//    }  //Added by ankit khanna to remove warnings on 7 March 2015
+//    
+//    
+//    if (error == nil)
+//    {
+//        // Parse data here
+//        NSLog(@"Web API ran successfully.");
+//    }
     
     // End of Web API code
 

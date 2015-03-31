@@ -50,6 +50,15 @@
     [[PhoneMainView instance] popCurrentView];
 
 }
+- (void)alertErrorMessage:(NSString *)message withTitle:(NSString *)title {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                    message:message
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+    [alert release];
+}
 - (IBAction)confirmActivationSMS:(id)sender {
 
     NSString *str_randomNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"Random_Character"];
@@ -60,7 +69,7 @@
     NSLog(@"Text Activate Confirm:%@",textActivateConfirm);
     
     if ([textActivateConfirm isEqualToString:str_randomNumber])    {
-        NSLog(@"Bingo You have successfully autheticated yourself");
+        NSLog(@"Bingo You have successfully authenticated yourself");
         NSString *smsActiveState = @"1";
         [[NSUserDefaults standardUserDefaults] setObject:smsActiveState forKey:@"SMS_Active_State"];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -73,7 +82,8 @@
         }
     }
     else    {
-        
+        [self alertErrorMessage:NSLocalizedString(@"Please enter correct activation code.", nil)
+                      withTitle:NSLocalizedString(@"Incorrect activation code", nil)];
             [[PhoneMainView instance] popCurrentView];
     }
 }

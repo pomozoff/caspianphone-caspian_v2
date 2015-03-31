@@ -329,6 +329,7 @@ static UICompositeViewDescription *compositeDescription = nil;
 
 - (IBAction)onAddContactClick:(id)event {
 	// Go to Contact details view
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"Remove_Buttons" object:nil];
 	ContactDetailsViewController *controller = DYNAMIC_CAST([[PhoneMainView instance] changeCurrentView:[ContactDetailsViewController compositeViewDescription] push:TRUE], ContactDetailsViewController);
 	if(controller != nil) {
 		if([ContactSelection getAddAddress] == nil) {
