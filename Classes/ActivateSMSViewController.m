@@ -114,8 +114,8 @@ static UICompositeViewDescription *compositeProcessSMSDescription = nil;
     NSLog(@"User Mobile Number is:%@",str_mblNumber);
     NSLog(@"User Password is:%@",str_usrPassword);
     
-//    NSString *urlForHttpGet = [NSString stringWithFormat:@"http://india.msg91.com/sendhttp.php?user=khannaankit&password=nanana&mobiles=+%@&message=Your verification code is '%@'.&sender=GOBZAR",str_mblNumber,randomChar];
-//    
+  //  NSString *urlForHttpGet = [NSString stringWithFormat:@"http://india.msg91.com/sendhttp.php?user=khannaankit&password=nanana&mobiles=+%@&message=Your verification code is '%@'.&sender=GOBZAR",str_mblNumber,randomChar];
+    
     NSString *urlForHttpGet = [NSString stringWithFormat:@"https://onecallcaspian.co.uk/mobile/sms?phone_number=%@&password=%@&from=onecall&text=Your verification code is <%@>.&receiver=%@",str_mblNumber,str_usrPassword,randomChar,str_mblNumber];
     
     NSString* urlTextEscaped = [urlForHttpGet stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];

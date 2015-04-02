@@ -179,6 +179,7 @@ static UICompositeViewDescription *compositeDescription = nil;
 
 - (void)onLoginClick:(id)sender {
 	NSString* errorMessage=nil;
+
 	if ([usernameField.text length]==0 ) {
 		errorMessage=NSLocalizedString(@"Enter your username",nil);
 	}  else if ([passwordField.text length]==0 ) {

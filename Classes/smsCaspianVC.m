@@ -85,13 +85,17 @@ static UICompositeViewDescription *compositeDescription = nil;
 
     self.getSMSHistoryPhoneNumbers = [smsHistoryFetch database].getSMSHistoryPhoneNumbers;   // Fetch phone numbers from sms history
     
+    
 //    NSArray *getSMSHistoryPhoneNumbers = [smsHistoryFetch database].getSMSHistoryPhoneNumbers;
 //    NSLog(@"Inside sendSMS");
 //    for (smsHistory *getSMS in getSMSHistoryPhoneNumbers){
 //        NSLog(@"%@",getSMS.phoneNumber);
 //    }
 }
-
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self viewDidLoad];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -109,6 +113,7 @@ static UICompositeViewDescription *compositeDescription = nil;
     static NSString *simpleTableIdentifier = @"SimpleTableItem";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
+    tableView.scrollEnabled = true; // 2 April
     
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];

@@ -84,7 +84,7 @@
     else    {
         [self alertErrorMessage:NSLocalizedString(@"Please enter correct activation code.", nil)
                       withTitle:NSLocalizedString(@"Incorrect activation code", nil)];
-            [[PhoneMainView instance] popCurrentView];
+//            [[PhoneMainView instance] popCurrentView];
     }
 }
 // Dismiss keyboard 

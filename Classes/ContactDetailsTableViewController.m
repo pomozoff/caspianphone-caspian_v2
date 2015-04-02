@@ -244,8 +244,8 @@ static const ContactSections_e contactSections[ContactSections_MAX] = {ContactSe
         
                 UIButton *btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
                 UIButton *btn10 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-                btn.frame = CGRectMake(230, 115, 32, 25); //The position and size of the button (x,y,width,height)
-                btn10.frame = CGRectMake(275, 115, 32, 25); //The position and size of the button
+                btn.frame = CGRectMake(230, 120, 32, 25); //The position and size of the button (x,y,width,height)
+                btn10.frame = CGRectMake(275, 120, 32, 25); //The position and size of the button
                 [btn setTitle:@"SMS" forState:UIControlStateNormal];
                 UIImage * buttonImage = [UIImage imageNamed:@"Message-50.png"];
                 UIImage * buttonImageChat = [UIImage imageNamed:@"Chat-50.png"];

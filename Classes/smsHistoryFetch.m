@@ -127,6 +127,7 @@ static smsHistoryFetch *_database;
                             NSLog(@"Error inserting data in sqlite3");
             else
                 NSLog(@"Inserted");
+            NSLog(@"%@",[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject]);
 
             sqlite3_finalize(statement);
         sqlite3_close(_database);
